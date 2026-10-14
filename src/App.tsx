@@ -17,6 +17,7 @@ type Model = {
   pros: string[];
   cons: string[];
   ratings: Rating[];
+  officialUrl?: string;
 };
 
 type Brand = {
@@ -59,6 +60,17 @@ const modelImages = [
   "https://nunababy.com/media/catalog/product/N/u/Nuna_TRVLlx_Caviar_Angle_GL_web_cfa8.png?optimize=high&fit=bounds&height=730&width=730&canvas=730:730&format=jpeg",
   "https://tshop.r10s.jp/nuna-onlineshop/cabinet/08082227/08082229/11449802/41483_01.jpg?fitin=720%3A720",
 ];
+
+const brandOfficialPages: Record<string, string> = {
+  Aprica: "https://www.aprica.jp/products/",
+  Combi: "https://www.combi.co.jp/products/",
+  AIRBUGGY: "https://www.airbuggy.com/",
+  Joie: "https://www.joiebaby.com/",
+  CYBEX: "https://www.cybex-online.com/",
+  Bugaboo: "https://www.bugaboo.com/jp/",
+  Stokke: "https://www.stokke.com/jp/",
+  Nuna: "https://nuna-baby.jp/",
+};
 
 const brands: Brand[] = [
   {
@@ -650,6 +662,64 @@ const models: Model[] = [
   },
 ];
 
+const modelOfficialUrls: Record<string, string> = {
+  mar: "https://www.aprica.jp/products/babycar/detail/reversible_mf/mar_ab/",
+  lacuna:
+    "https://www.aprica.jp/products/babycar/detail/reversible_lw/luxuna_cushion_free_2026/",
+  "lacuna-plus":
+    "https://www.aprica.jp/products/babycar/detail/reversible_lw/luxuna_cushion_free_2026/",
+  "lacuna-ai":
+    "https://www.aprica.jp/products/babycar/detail/reversible_lw/luxuna_cushion_ai/",
+  karoon:
+    "https://www.aprica.jp/products/babycar/detail/reversible_lw/karoonair_mesh_ad/",
+  luche: "https://www.aprica.jp/products/babycar/detail/luce/lucefree_ac/",
+  sugocal:
+    "https://www.combi.co.jp/store/stroller/sugocalr/g/g119813/?srsltid=AU7gw4V_OY15afoUQjKtVQu5DiWzM9FssrKtqNCg74Preac1b_PR_oyG",
+  sugos:
+    "https://www.combi.co.jp/store/stroller/sugocals/g/g119353/?srsltid=AU7gw4VkRV3ge4e9q2pUwkdjODINEvRSuDBgIpo-XIuLBisWrQN89blZ",
+  "sugo-compact":
+    "https://www.combi.co.jp/store/stroller/sugocall/g/g119888/?srsltid=AU7gw4Vn1QlIi_HEetVIsImVY7-tgTe_lDzZhWRe_f6VFIUzsIAx4HGR",
+  coco: "https://www.airbuggy.com/stroller/coco-premier-from-birth/",
+  "coco-next": "https://www.airbuggy.com/stroller/coco-brake-next/",
+  "smartaigi-drift":
+    "https://www.katoji-onlineshop.com/c/category/babycar/41557?srsltid=AU7gw4WJMTs85Yj-D2H_1DXpSYOtvefYwFihFOprXWylYL4u5UxeOr40",
+  "smartaigi-4wd":
+    "https://www.katoji-onlineshop.com/c/category/babycar/41003?srsltid=AU7gw4VjkSW9FKWp7-RYdgaV6SUZJxnx1ecr3qDdWcbRAz5-tOox0cB0",
+  "smartaigi-mesh":
+    "https://www.katoji-onlineshop.com/c/category/babycar/41132?srsltid=AU7gw4U6_xIGYbyLrDaYtkFnOm5_1OE3DcZr0wlAuFVZ-q20eYFcJA4f",
+  "pact-pro":
+    "https://www.katoji-onlineshop.com/c/category/babycar/41407?srsltid=AU7gw4Xq4rani3i4Q24JFfUvIJYXAkdIByKpC-S3uDWbxELVv34eDWqK",
+  "aireskip-lite":
+    "https://www.katoji-onlineshop.com/c/category/babycar/41592?srsltid=AU7gw4XRTzj7mDCjRPzBTUBB_MwYLjKl5mRISTP2bWe4lP41FhGBIijB",
+  melio:
+    "https://cybex-japan.com/products/melio-carbon-2026?srsltid=AU7gw4WyxUmy4-rjCSSHUI4IaNGFJX6CjWjJZOMvhnr8C6tdVXFm82Ry",
+  mios: "https://www.babyride.jp/product-group/3",
+  "butterfly-2":
+    "https://www.bugaboo.com/jp-ja/%E3%82%B9%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%E3%83%BC/bugaboo-butterfly/",
+  "dragonfly-plus":
+    "https://www.bugaboo.com/jp-ja/%E3%83%90%E3%82%AC%E3%83%96%E3%83%BC%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%83%95%E3%83%A9%E3%82%A4%E3%82%B3%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E3%82%B7%E3%83%86%E3%82%A3%E3%83%99%E3%83%93%E3%83%BC%E3%82%AB%E3%83%BC/",
+  "yoyo5-ab":
+    "https://www.stokke.com/JPN/ja-jp/%E3%82%B9%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%E3%83%BC/yoyo-%E3%83%99%E3%83%93%E3%83%BC%E3%82%AB%E3%83%BC/7260.html",
+  "yoyo3-0":
+    "https://www.stokke.com/JPN/ja-jp/%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B5%E3%83%AA%E3%83%BC/yoyo-%E3%81%AE%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B5%E3%83%AA%E3%83%BC/6490.html",
+  "ixxa-next":
+    "https://nuna-baby.jp/products/ixxa-next?srsltid=AU7gw4UGoTsf8r6FU7PsMxYbR_UDgpXcx2VUNyykWkdTdxqrSqjaCi8e",
+  "triv-next":
+    "https://nuna-baby.jp/products/triv-next-1?srsltid=AU7gw4WZwIq1A8Y0EZ5SUiaZB-zmE-mM5ELNaQgDKoLhH7j_UMLKNpGt",
+  "mixx-next":
+    "https://nuna-baby.jp/products/mixx-next-bmw-collection?srsltid=AU7gw4Witqj4NLyfcIDkLUJNaQwJKwK4f3DmiTUhQRkWHexGEflbTcYl",
+  "trvl-lx":
+    "https://nuna-baby.jp/products/trvl-lx?srsltid=AU7gw4W5f3l_62qCTisMZQviDBBl5Q4aQIKuS5787x2X75-nQNS-06di",
+  swiv: "https://nuna-baby.jp/products/swiv?srsltid=AU7gw4VPEc6yr1sW6di3qtUld6Xvz0Mwvvu1s6XeWiAXSb_AgKmaAnPv",
+};
+
+const getOfficialUrl = (model: Model) => {
+  if (model.officialUrl) return model.officialUrl;
+  if (modelOfficialUrls[model.id]) return modelOfficialUrls[model.id];
+
+  return `https://www.google.com/search?q=${encodeURIComponent(`${model.brand} ${model.name}`)}`;
+};
+
 const purposeMatrix = [
   {
     purpose: "駅・階段が多い",
@@ -1040,21 +1110,29 @@ function BrandPage({
                   <span>おすすめ</span>
                   {model.use}
                 </p>
-                <button
-                  className={
-                    selectedIds.includes(model.id)
-                      ? "compare-toggle is-selected"
-                      : "compare-toggle"
-                  }
-                  onClick={() => onToggle(model.id)}
-                >
-                  <span>
-                    {selectedIds.includes(model.id) ? <CheckIcon /> : "+"}
-                  </span>
-                  {selectedIds.includes(model.id)
-                    ? "比較リストに追加済み"
-                    : "比較リストに追加"}
-                </button>
+                <div className="model-card-actions">
+                  <a
+                    className="official-link"
+                    href={getOfficialUrl(model)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    公式サイト
+                  </a>
+                  <button
+                    className={
+                      selectedIds.includes(model.id)
+                        ? "compare-toggle is-selected"
+                        : "compare-toggle"
+                    }
+                    onClick={() => onToggle(model.id)}
+                  >
+                    <span>
+                      {selectedIds.includes(model.id) ? <CheckIcon /> : "+"}
+                    </span>
+                    {selectedIds.includes(model.id) ? "比較済み" : "比較追加"}
+                  </button>
+                </div>
               </div>
             </article>
           ))}
